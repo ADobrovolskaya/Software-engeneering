@@ -1,0 +1,12 @@
+!pip install fastapi
+from fastapi import FastAPI
+from transformers import pipeline
+!pip install uvicorn
+
+app = FastAPI()
+document = pipeline('translation_ru_to_it', model="Helsinki-NLP/opus-mt-tc-big-zle-it")
+
+@app.get("/predict/")
+def predict():
+    return document("Я изучаю инженерию")[0]
+
