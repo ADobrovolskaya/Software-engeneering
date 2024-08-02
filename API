@@ -2,11 +2,20 @@
 from fastapi import FastAPI
 from transformers import pipeline
 !pip install uvicorn
+from pydantic import BaseModel
+
+class Item(BaseModel):
+    text: str
 
 app = FastAPI()
 document = pipeline('translation_ru_to_it', model="Helsinki-NLP/opus-mt-tc-big-zle-it")
 
+@app.get("/")
+def root():
+    return {"message": "Hello World"}
+
 @app.get("/predict/")
-def predict():
-    return document("Я изучаю инженерию")[0]
+def predict(item: Item):
+    return document(item.text )[0]
+ 
 
