@@ -14,7 +14,7 @@ document = pipeline('translation_ru_to_it', model="Helsinki-NLP/opus-mt-tc-big-z
 def root():
     return {"message": "Hello World"}
 
-@app.get("/predict/")
+@app.post("/predict/")
 def predict(item: Item):
     return document(item.text )[0]
  
